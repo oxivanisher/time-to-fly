@@ -2,37 +2,17 @@
 
 namespace Concrete\Package\TimeToFly;
 
-use Concrete\Core\Backup\ContentImporter;
+use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Package\Package;
-use Doctrine\ORM\EntityManager;
 
-/**
- * The package controller.
- *
- * Manages the package installation, update and start-up.
- */
+defined('C5_EXECUTE') or die('Access Denied.');
+
 class Controller extends Package
 {
-    /**
-     * The minimum concrete5 version.
-     *
-     * @var string
-     */
+
     protected $appVersionRequired = '8';
-
-    /**
-     * The unique handle that identifies the package.
-     *
-     * @var string
-     */
-    protected $pkgHandle = 'time-to-fly';
-
-    /**
-     * The package version.
-     *
-     * @var string
-     */
-    protected $pkgVersion = '0.9.0';
+    protected $pkgHandle = 'time_to_fly';
+    protected $pkgVersion = '0.9.2';
 
     /**
      * Map folders to PHP namespaces, for automatic class autoloading.
@@ -71,26 +51,16 @@ class Controller extends Package
     public function install()
     {
         $pkg = parent::install();
-        $this->installXml();
+
+        // Install blocks
+        if ( ! is_object(BlockType::getByHandle('time_to_fly'))) {
+            BlockType::installBlockType('time_to_fly', $pkg);
+        }
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Package\Package::upgrade()
-     */
-    public function upgrade()
-    {
-        parent::upgrade();
-        $this->installXml();
-    }
+    public function uninstall() {
 
-    /**
-     * Install/update data from install XML file.
-     */
-    private function installXml()
-    {
-        $contentImporter = $this->app->make(ContentImporter::class);
-        $contentImporter->importContentFile($this->getPackagePath() . '/install.xml');
+        parent::uninstall();
+
     }
 }
