@@ -4,6 +4,7 @@ namespace Concrete\Package\TimeToFly;
 
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Package\Package;
+use OxiVanisher\TimeToFly\RouteList;
 
 defined('C5_EXECUTE') or die('Access Denied.');
 
@@ -18,10 +19,11 @@ class Controller extends Package
      * Map folders to PHP namespaces, for automatic class autoloading.
      *
      * @var array
-     *protected $pkgAutoloaderRegistries = [
-     *  'src' => 'MyShops',
-     *];
      */
+     protected $pkgAutoloaderRegistries = [
+       'routes' => 'OxiVanisher\\TimeToFly',
+     ];
+
 
     /**
      * {@inheritdoc}
@@ -62,5 +64,11 @@ class Controller extends Package
 
         parent::uninstall();
 
+    }
+
+    public function on_start(){
+        $router = $this->app->make('router');
+        $list = new RouteList();
+        $list->loadRoutes($router);
     }
 }
