@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Block\TimeToFly;
+namespace Concrete\Package\TimeToFly\Block\TimeToFly;
 
 defined('C5_EXECUTE') or die('Access Denied.');
 
