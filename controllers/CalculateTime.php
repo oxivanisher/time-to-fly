@@ -3,12 +3,13 @@
 # API https://documentation.concrete5.org/tutorials/creating-a-simple-api-for-posting-blogs
 # https://documentation.concrete5.org/tutorials/concrete5-coding-guideline-57x-and-later
 
-namespace Application\Controller;
+namespace Concrete\Package\TimeToFly\Controller;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 defined('C5_EXECUTE') or die('Access Denied.');
 
-class CalculateTime extends PageController {
+class CalculateTime {
 
         private $zenith = 90+50/60;
         private $lat = 47.1881119;
@@ -36,11 +37,11 @@ class CalculateTime extends PageController {
         }
 
         private function getSunrise($dstDate) {
-                return date_sunrise ($dstDate, SUNFUNCS_RET_TIMESTAMP, $this->$lat, $this->$long, $this->$zenith);
+                return date_sunrise ($dstDate, SUNFUNCS_RET_TIMESTAMP, $this->lat, $this->long, $this->zenith);
         }
 
         private function getSunset($dstDate) {
-                return date_sunset ($dstDate, SUNFUNCS_RET_TIMESTAMP, $this->$lat, $this->$long, $this->$zenith);
+                return date_sunset ($dstDate, SUNFUNCS_RET_TIMESTAMP, $this->lat, $this->long, $this->zenith);
         }
 
         private function genOutput($date, $sunrise, $sunset) {
@@ -64,25 +65,25 @@ class CalculateTime extends PageController {
                         $this->genOutput($now, $this->getSunrise($now), $this->getSunset($now));
                         $now += 86400;
                 }
-
-                WIP
+                /*
                 $jsonArray = [
                         'secret'=> $this->getSecret(),
                         'clientID' => $this->generateClientID($user->getUserID())
                 ];
-                return new JsonResponse($jsonArray, 200);
+                */
+                return new JsonResponse([], 200);
 
         }
 
         public function getSimple($long = NULL, $lat = NULL) {
-                if ($long) $this->$long = $long;
-                if ($lat) $this->$lat = $lat;
+                if ($long) $this->long = $long;
+                if ($lat) $this->lat = $lat;
 
                 $event = $day = $duration = $time = "";
 
                 $now = time();
                 $sunrise = $this->getSunrise($now);
-                $data = $this->getSunset($now);
+                $sunset = $this->getSunset($now);
                 if ($now < $sunrise) {
                         $event = "light";
                         $day = "today";
@@ -94,7 +95,7 @@ class CalculateTime extends PageController {
                         $duration = $this->genDuration($sunset - $now);
                         $time = $this->genTime($sunset);
                 } else {
-                        $sunriseTomorrow = $this->getSunData($now + (24 * 60 * 60))
+                        $sunriseTomorrow = $this->getSunrise($now + (24 * 60 * 60));
 
                         $event = "light";
                         $day = "tomorrow";
