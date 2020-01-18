@@ -13,7 +13,7 @@ class Controller extends Package
 
     protected $appVersionRequired = '8';
     protected $pkgHandle = 'time_to_fly';
-    protected $pkgVersion = '0.9.2';
+    protected $pkgVersion = '0.9.3';
 
     /**
      * Map folders to PHP namespaces, for automatic class autoloading.
