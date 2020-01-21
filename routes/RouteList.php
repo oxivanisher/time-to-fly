@@ -16,7 +16,6 @@ class RouteList implements RouteListInterface
             $request = Request::createFromGlobals();
             $lat = $request->get('lat');
             $long = $request->get('long');
-            printf($long);
             $time = new CalculateTime();
             return $time->getSimple($lat,$long);
 

@@ -1,7 +1,7 @@
 // request functions
 $(document).ready(function() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(timeToFlySimpleGotPosition(), timeToFlyRequestSimpleNoPosition());
+    navigator.geolocation.getCurrentPosition(timeToFlySimpleGotPosition, timeToFlyRequestSimpleNoPosition);
   } else {
     console.log("No geolocation functionality found in browser");
     timeToFlyRequestSimpleNoPosition();
@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 function timeToFlyRequestList() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(timeToFlyListGotPosition(), timeToFlyRequestListNoPosition());
+    navigator.geolocation.getCurrentPosition(timeToFlyListGotPosition, timeToFlyRequestListNoPosition);
   } else {
     console.log("No geolocation functionality found in browser");
     timeToFlyRequestListNoPosition();
