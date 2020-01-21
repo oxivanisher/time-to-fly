@@ -54,7 +54,7 @@ class CalculateTime {
                 );
         }
 
-        public function getList($long = NULL, $lat = NULL) {
+        public function getList($lat = NULL, $long = NULL) {
                 if ($long) $this->$long = $long;
                 if ($lat) $this->$lat = $lat;
 
@@ -69,7 +69,7 @@ class CalculateTime {
 
         }
 
-        public function getSimple($long = NULL, $lat = NULL) {
+        public function getSimple($lat = NULL, $long = NULL) {
                 if ($long) $this->long = $long;
                 if ($lat) $this->lat = $lat;
 
